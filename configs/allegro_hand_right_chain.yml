@@ -1,0 +1,18 @@
+# Chain retargeting for the right Allegro hand (GeoRT/thesis-Isaac numbering: index=0-3, middle=4-7,
+# ring=8-11, thumb=12-15 on both hands). Unlike DexPilot (fingertips only, which left the proximal/PIP
+# joints unconstrained -- a real fist only reached 10-50% closure there, live 2026-08-20), this tracks
+# wrist->PIP, wrist->DIP and wrist->tip per finger, so every flexion joint follows the human.
+# Human MP21 indices: thumb cmc1 mcp2 ip3 tip4 | index 5-8 | middle 9-12 | ring 13-16 | little 17-20.
+retargeting:
+  type: vector
+  urdf_path: assets/allegro/allegro_right/allegro_hand_right.urdf   # replaced at runtime by isaac_teleop/xr_hand.py
+  wrist_link_name: "wrist"
+  target_origin_link_names: [ "wrist", "wrist", "wrist", "wrist", "wrist", "wrist", "wrist", "wrist", "wrist", "wrist", "wrist" ]
+  target_task_link_names: [ "link_2.0", "link_3.0", "link_3.0_tip",
+                            "link_6.0", "link_7.0", "link_7.0_tip",
+                            "link_10.0", "link_11.0", "link_11.0_tip",
+                            "link_14.0", "link_15.0_tip" ]
+  target_link_human_indices: [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                               [ 6, 7, 8, 10, 11, 12, 14, 15, 16, 3, 4 ] ]
+  scaling_factor: 1.3
+  low_pass_alpha: 0.2

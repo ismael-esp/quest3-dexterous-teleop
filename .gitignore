@@ -1,0 +1,27 @@
+# whitelist: only these paths belong to the repo (venvs, vendor clones, certs, recordings stay local)
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/pytest.ini
+!/requirements-bridge.txt
+!/requirements-isaac.txt
+!/assets/
+!/configs/
+!/docs/
+!/isaac_teleop/
+!/quest_bridge/
+!/scripts/
+!/sim/
+!/tests/
+/sim/assets/
+/docs/*
+!/docs/index.html
+!/docs/cloudxr/
+!/docs/media/
+!/docs/results/
+__pycache__/
+*.pyc
+.pytest_cache/
+/docs/cloudxr/INVESTIGATION.md
+/docs/cloudxr/TELEOP_FRAMEWORK_DIAGRAM.md

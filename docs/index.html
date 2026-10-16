@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quest 3 Dexterous Teleop</title>
+<meta name="description" content="Meta Quest 3 hand-tracking teleoperation of a dual-arm UR3 + Allegro hand cell in Isaac Lab, with human-to-Allegro hand retargeting and a demonstration recorder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f9f8f5; --surface:#ffffff; --ink:#1a1c20; --muted:#5b616c; --line:#e4e1da;
+  --accent:#2457d6; --accent-soft:#e6edfb; --warm:#d9640f; --code:#f2f0eb;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#101214; --surface:#171a1e; --ink:#e8e9eb; --muted:#9aa1ab; --line:#2a2e34;
+         --accent:#7aa2ff; --accent-soft:#18213a; --warm:#ff9a4d; --code:#1e2226; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{padding:60px 0 24px}
+.eyebrow{font:500 13px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:14px 0;letter-spacing:-.02em}
+.lede{font-size:19px;color:var(--muted);max-width:800px;margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:500;background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.hero{margin:10px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.hero video{display:block;width:100%;height:auto}
+.cap{font-size:14px;color:var(--muted);margin:8px 0 0}
+h2{font-size:25px;margin:60px 0 10px;letter-spacing:-.01em}
+h3{font-size:18px;margin:30px 0 8px}
+p{max-width:820px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:18px}
+.stat{background:var(--accent-soft);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-size:26px;letter-spacing:-.01em}
+.stat span{font-size:14px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.step .n{font:500 12px "JetBrains Mono",monospace;color:var(--accent)}
+.step b{display:block;margin:2px 0 4px}
+.step span{color:var(--muted);font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:16px}
+.grid.small{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+figure img,figure video{display:block;width:100%;height:auto;background:#000}
+figcaption{padding:9px 12px;font-size:14px;color:var(--muted)}
+.tag{display:inline-block;font:500 11px "JetBrains Mono",monospace;padding:2px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent);margin-right:6px}
+.tag.side{background:rgba(217,100,15,.12);color:var(--warm)}
+.plot{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;margin-top:14px}
+.plot img{display:block;width:100%}
+.tablewrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:600;color:var(--muted);font-size:13px}
+tr:last-child td{border-bottom:0;font-weight:600}
+td.num{font-variant-numeric:tabular-nums}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font:13.5px/1.55 "JetBrains Mono",monospace}
+code{font-family:"JetBrains Mono",monospace;font-size:.92em}
+footer{margin:64px 0 40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">VR teleoperation · hand retargeting · demonstration collection</div>
+  <h1>Quest 3 Hands → Two Arms, Two Allegro Hands</h1>
+  <p class="lede">The operator wears a Meta Quest 3 and sees the simulated dual-arm cell in stereo from the robot's head.
+  Both UR3 arms follow the operator's wrists and both 16-DoF Allegro hands follow their fingers, while every step is
+  recorded as a demonstration for imitation learning.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/ismael-esp/quest3-dexterous-teleop">Code &amp; setup guide</a>
+    <a class="btn" href="https://github.com/ismael-esp/quest3-dexterous-teleop/releases/tag/v1.0">Assets &amp; recorded demos</a>
+    <a class="btn" href="https://github.com/ismael-esp/allegro-hand-retargeting">Glove retargeting (GeoRT)</a>
+  </div>
+</header>
+
+<div class="grid">
+  <figure><video src="media/handover_demo.mp4" autoplay muted loop playsinline controls></video><figcaption><span class="tag">demo</span>a teleoperated handover, front-view recording saved with the episode</figcaption></figure>
+  <figure><video src="media/headset_view.mp4" muted loop playsinline controls preload="metadata"></video><figcaption><span class="tag side">headset</span>what the operator sees: grasp, lift and hand over</figcaption></figure>
+</div>
+
+<h2>How it works</h2>
+<div class="steps">
+  <div class="step"><div class="n">01</div><b>Track</b><span>The Quest 3 streams 26 joints per hand and the head pose through NVIDIA's CloudXR runtime (or a WebXR page as a lighter alternative).</span></div>
+  <div class="step"><div class="n">02</div><b>Retarget the hands</b><span>Keypoints in the wrist frame → vector retargeting on wrist→PIP/DIP/tip, an angle-mapped thumb, pinch snapping and a One-Euro filter → 16 Allegro joints per hand.</span></div>
+  <div class="step"><div class="n">03</div><b>Drive the arms</b><span>A clutch anchors each wrist to its end-effector; differential IK then follows the hand 1:1 with a lead clamp.</span></div>
+  <div class="step"><div class="n">04</div><b>Record</b><span>Each step stores observations, the 44-D action, robot, object and fingertip state and the raw hand tracking; a converter builds a fixed-length BC dataset.</span></div>
+</div>
+
+<h2>Hand mapping</h2>
+<p>A recorded episode replayed through the retargeter: the tracked human hand on the left of each row, the Allegro at the
+retargeted joint angles on the right (top: right hand, bottom: left hand).</p>
+<figure style="max-width:760px"><video src="media/hand_mapping.mp4" autoplay muted loop playsinline controls></video><figcaption>open hand → power grasp on the rod, both hands</figcaption></figure>
+
+<h3>Flexion agreement over the recorded episodes</h3>
+<p>5 200 tracked frames per hand. Pearson r between the operator's finger flexion and the Allegro finger's summed flexion joints:</p>
+<div class="tablewrap"><table>
+<tr><th>profile / hand</th><th>thumb</th><th>index</th><th>middle</th><th>ring</th><th>Allegro index flexion (P2–P98)</th></tr>
+<tr><td>dexpilot (fingertips only), right</td><td class="num">0.88</td><td class="num">0.95</td><td class="num">0.97</td><td class="num">0.98</td><td class="num">0.1 – 3.7 rad</td></tr>
+<tr><td>dexpilot (fingertips only), left</td><td class="num">0.92</td><td class="num">0.98</td><td class="num">0.99</td><td class="num">0.99</td><td class="num">−0.1 – 3.5 rad</td></tr>
+<tr><td>chain (default), left</td><td class="num">0.94</td><td class="num">0.98</td><td class="num">0.98</td><td class="num">0.98</td><td class="num">−0.2 – 4.4 rad</td></tr>
+<tr><td>chain (default), right</td><td class="num">0.91</td><td class="num">0.97</td><td class="num">0.98</td><td class="num">0.98</td><td class="num">0.1 – 4.5 rad</td></tr>
+</table></div>
+<p class="cap">Both follow flexion monotonically; the chain profile also reaches full closure (~4.5 rad) where the fingertip-only objective stops near 3.5–4 rad.
+This measures agreement with the operator's hand, not grasp success.</p>
+<div class="plot"><img src="results/hand_mapping_flexion.png" alt="per-finger flexion scatter plots"></div>
+
+<h2>Run it</h2>
+<pre>git clone https://github.com/ismael-esp/quest3-dexterous-teleop.git && cd quest3-dexterous-teleop
+conda activate env_isaaclab                      # Isaac Lab 2.3 / Isaac Sim 5.1
+pip install -r requirements-isaac.txt
+scripts/download_assets.sh && scripts/setup_cloudxr_env.sh
+scripts/cloudxr_service.sh                       # terminal 1, then connect the headset
+GPU=0 DEVICE=cpu scripts/run_cloudxr_teleop.sh --object rod     # terminal 2: A start, F finish, S/N/D label</pre>
+<p>No headset? <code>scripts/run_teleop.sh --fake_vr --auto_engage --steps 600</code> runs a scripted episode end to end.</p>
+
+<footer>Ismael Espinoza · simulation only; the real cell's drivers are in
+<a href="https://github.com/ismael-esp/dual-arm-allegro-ros2">dual-arm-allegro-ros2</a>.</footer>
+</div>
+</body>
+</html>

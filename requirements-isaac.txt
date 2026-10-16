@@ -1,0 +1,7 @@
+# Extra packages for the Isaac Lab 2.3 env (Isaac Sim 5.1, Python 3.11):
+#   conda activate env_isaaclab && pip install -r requirements-isaac.txt
+dex_retargeting==0.4.6     # brings pin (pinocchio) 2.7, nlopt, anytree
+pyzmq>=25
+msgpack>=1.0
+opencv-python
+pytest

@@ -1,0 +1,12 @@
+# DexPilot retargeting for the left Allegro hand, for the GeoRT / thesis-Isaac URDF numbering where
+# joint_0-3 = index, 4-7 = middle, 8-11 = ring, 12-15 = thumb on BOTH hands (index next to the thumb).
+# dex_retargeting's own allegro_hand_left_dexpilot.yml lists [15, 11, 7, 3] because the official Wonik
+# left URDF is mirrored (index = joint_8); using it with our left URDF swapped index <-> ring (2026-08-19).
+retargeting:
+  type: DexPilot
+  urdf_path: assets/allegro/allegro_left/allegro_hand_left.urdf   # replaced at runtime by isaac_teleop/xr_hand.py
+  wrist_link_name: "wrist"
+  # order = human [thumb, index, middle, ring]
+  finger_tip_link_names: [ "link_15.0_tip", "link_3.0_tip", "link_7.0_tip", "link_11.0_tip" ]
+  scaling_factor: 1.6
+  low_pass_alpha: 0.2

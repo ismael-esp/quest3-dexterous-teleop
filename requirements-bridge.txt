@@ -1,0 +1,5 @@
+# host venv for the browser (WebXR) path: scripts/setup_bridge_env.sh
+vuer @ git+https://github.com/ROBOTIS-GIT/vuer.git@c19d908fabe5c1aae723e3855b351b47c555bf50   # v0.1.6-robotis
+pyzmq>=25
+msgpack>=1.0
+numpy>=1.21
