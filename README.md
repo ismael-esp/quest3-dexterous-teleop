@@ -1,6 +1,7 @@
 # quest3-dexterous-teleop
 
 [![tests](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/tests.yml)
+[![lint](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/lint.yml)
 
 **Meta Quest 3 hand-tracking teleoperation of a dual-arm UR3 + Allegro hand cell in Isaac Lab,
 with human→Allegro hand retargeting and a demonstration recorder.**

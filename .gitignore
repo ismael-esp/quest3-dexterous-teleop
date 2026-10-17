@@ -5,6 +5,7 @@
 !/README.md
 !/LICENSE
 !/pytest.ini
+!/ruff.toml
 !/requirements-bridge.txt
 !/requirements-isaac.txt
 !/assets/
