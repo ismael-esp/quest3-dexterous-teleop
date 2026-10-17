@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: unit tests (no Isaac)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"   # same interpreter as Isaac Sim 5.1 / Isaac Lab 2.3
+          cache: pip
+          cache-dependency-path: .github/workflows/tests.yml
+
+      - name: Install ffmpeg (VideoRecorder tests)
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install dex_retargeting==0.4.6 pyzmq msgpack numpy pytest
+
+      - name: Run unit tests (the Isaac test is deselected by pytest.ini)
+        run: python -m pytest -q

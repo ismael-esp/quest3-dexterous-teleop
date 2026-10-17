@@ -1,6 +1,7 @@
 # whitelist: only these paths belong to the repo (venvs, vendor clones, certs, recordings stay local)
 /*
 !/.gitignore
+!/.github/
 !/README.md
 !/LICENSE
 !/pytest.ini

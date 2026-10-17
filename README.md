@@ -1,5 +1,7 @@
 # quest3-dexterous-teleop
 
+[![tests](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ismael-esp/quest3-dexterous-teleop/actions/workflows/tests.yml)
+
 **Meta Quest 3 hand-tracking teleoperation of a dual-arm UR3 + Allegro hand cell in Isaac Lab,
 with human→Allegro hand retargeting and a demonstration recorder.**
 
@@ -42,7 +44,7 @@ Quest 3 ── hands (26 joints) + head ──►  CloudXR runtime  ──►  i
 | **Dataset conversion** | `scripts/convert_vr_demos.py`, `sim/trl_utils/vr_demo_convert.py` | Cut at the env's success latch + tail, choose T = P95 of the cut lengths, hold-pad, write the BC dataset |
 | **Simulation env** | `sim/` | The dual-arm UR3/UR3e + Allegro handover env (`handover_tshape`, `DirectRLEnv`), objects `rod`, `rod_slim`, `tumbler`; USD assets are a release download |
 | **Evaluation / media** | `scripts/eval_hand_mapping.py`, `scripts/media/` | Flexion agreement between your hand and the Allegro on recorded episodes; the renders above |
-| **Tests** | `tests/` | 81 unit tests (no Isaac) + 1 end-to-end Isaac test |
+| **Tests** | `tests/`, `.github/workflows/tests.yml` | 81 unit tests (no Isaac, run by GitHub Actions on every push) + 1 end-to-end Isaac test |
 
 Recorded data: 6 teleoperated handover episodes (release `v1.0`, `vr_demos_handover_20260821.tar.gz`).
 
@@ -242,3 +244,7 @@ tests/          unit tests + opt-in Isaac test (-m isaac)
   and the [ROBOTIS fork of vuer](https://github.com/ROBOTIS-GIT/vuer) for the WebXR page.
 - Related: [allegro-hand-retargeting](https://github.com/ismael-esp/allegro-hand-retargeting) (Manus glove →
   Allegro with GeoRT), [dual-arm-allegro-ros2](https://github.com/ismael-esp/dual-arm-allegro-ros2) (the real cell).
+
+---
+
+Developed 2025-2026 by Ismael Espinoza Jaramillo (PhD candidate, Kyung Hee University) in the lab's private workspace and published here as a clean snapshot in Oct 2026 · [ismael-esp.github.io](https://ismael-esp.github.io) · [github.com/ismael-esp](https://github.com/ismael-esp)
